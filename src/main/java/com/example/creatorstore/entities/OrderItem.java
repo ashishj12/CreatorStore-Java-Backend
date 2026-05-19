@@ -2,6 +2,8 @@ package com.example.creatorstore.entities;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +31,7 @@ public class OrderItem {
 	@Column(name = "price_at_purchase", nullable = false)
 	private BigDecimal priceAtPurchase;
 	
-	// Relations
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "order_id", nullable = false)
 	private Order order;
