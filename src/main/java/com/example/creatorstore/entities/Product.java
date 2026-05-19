@@ -1,6 +1,9 @@
 package com.example.creatorstore.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,31 +18,26 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.util.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
-@Table(name= "products")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "products")
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = "Product name is required")
 	@Column(nullable = false)
 	private String name;
+	@NotBlank(message = "description is required")
 	private String description;
-	
+
 	@NotNull(message = "price is required")
 	@Column(nullable = false)
 	@DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
@@ -49,7 +47,7 @@ public class Product {
 	@Min(value = 0, message = "Stock cannot be less than 0")
 	@Column(name = "stock_quantity", nullable = false)
 	private Integer stockQuantity;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<OrderItem> orderItems;

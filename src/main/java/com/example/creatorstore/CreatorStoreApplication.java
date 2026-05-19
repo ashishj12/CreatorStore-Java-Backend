@@ -9,11 +9,8 @@ import io.github.cdimascio.dotenv.DotenvEntry;
 @SpringBootApplication
 public class CreatorStoreApplication {
 	public static void main(String[] args) {
-		
-		// Load .env file	
-		Dotenv dotenv = Dotenv.configure()
-				.ignoreIfMissing()
-				.load();
+		// load environment file
+		Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
 		// Set environment variables as system properties
 		dotenv.entries().forEach((DotenvEntry entry) -> {

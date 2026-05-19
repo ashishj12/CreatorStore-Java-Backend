@@ -1,12 +1,8 @@
 package com.example.creatorstore.controllers;
-import com.example.creatorstore.entities.Product;
-import com.example.creatorstore.services.ProductService;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
-import java.util.*;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,38 +12,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.creatorstore.entities.Product;
+import com.example.creatorstore.services.ProductService;
+
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/products")
-@RequiredArgsConstructor
 public class ProductController {
 
 	private final ProductService productService;
-	
-	// Post Endpoint for product
-	@PostMapping
-	public Product createProduct(@Valid @RequestBody Product product){
-		return null;
+
+	public ProductController(ProductService productService) {
+		this.productService = productService;
 	}
-	
-	// Update Endpoint for product
+
+	@PostMapping
+	public Product createProduct(@Valid @RequestBody Product product) {
+		return productService.createProduct(product);
+	}
+
 	@PutMapping
 	public Product updateProduct(@PathVariable Long id, @Valid @RequestBody Product product) {
-		return null;
+		return productService.updateProduct(id, product);
 	}
-	
-	// get all products endpoint
+
 	@GetMapping
-	public List<Product> getProducts(){
-		return null;
+	public List<Product> getProducts() {
+		return productService.getProducts();
 	}
-	
-	// get single product endpoint
+
 	@GetMapping("/{id}")
 	public Product getProductById(@PathVariable Long id) {
-		return null;
+		return productService.getProductById(id);
 	}
-	
-	// delete endpoint for product
+
 	@DeleteMapping("/{id}")
-	public void deleteProduct(@PathVariable Long id) {}
+	public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+	    productService.deleteProduct(id);
+	    return ResponseEntity.ok("Product deleted successfully");
+	}
 }
